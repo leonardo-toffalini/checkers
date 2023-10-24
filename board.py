@@ -11,10 +11,10 @@ class Board:
         self.tile_size = self.board_size // self.num_tiles
         self.selected_piece = None
 
-        # TODO: define actual starting position
         if board is None:
             self.board = []
 
+            # alternating black piece for the first 3 rows
             for i in range(3):
                 self.board.append([])
                 if i % 2:
@@ -29,6 +29,7 @@ class Board:
             for _ in range(self.num_tiles - 6):
                 self.board.append([0 for _ in range(self.num_tiles)])
 
+            # alternating red piece for the last 3 rows
             for i in range(3):
                 self.board.append([])
                 if i % 2:

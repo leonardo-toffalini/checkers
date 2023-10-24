@@ -26,7 +26,6 @@ class Pawn(Piece):
 
     def valid_moves(self) -> list[tuple[int]]:
         """ Returns a list of legal moves for the pawn for the current position """
-        # TODO: return the correct legal moves
         moves = []
         poss_moves = self._possible_moves()
         for move in poss_moves:

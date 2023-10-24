@@ -30,7 +30,6 @@ class King(Piece):
 
     def valid_moves(self) -> list[tuple[int]]:
         """ Returns a list of legal moves for the pawn for the current position """
-        # TODO: return the correct legal moves
         moves = []
         poss_moves = self._possible_moves()
         for move in poss_moves:
@@ -39,7 +38,8 @@ class King(Piece):
                 continue
             
             tile = self.board.get_tile_from_pos(tile_pos[1], tile_pos[0]) # function takes (x, y) parameters so (col, row)
-            if tile.piece is None:
+            # NOTE: we have to check if the tile is None because in checkers you could 'move off the board'
+            if tile is not None and tile.piece is None:
                 moves.append(move)
         return moves
 

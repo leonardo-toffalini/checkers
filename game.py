@@ -1,4 +1,5 @@
 from piece import Color
+from king import King
 
 class Game:
     def __init__(self, board):
@@ -44,22 +45,20 @@ class Game:
 
     def check_last_rank(self) -> Color|None:
         """ Returns BLACK if a BLACK piece has reached the last rank, returns RED if a RED piece has reached the last rank, returns None otherwise """
-        # TODO: this code can be reused for checking if a pawn should be promoted to a king, should not return a color
         for i in range(self.board.num_tiles):
             first_row_tile = self.board.get_tile_from_pos(i, 0)
             last_row_tile = self.board.get_tile_from_pos(i, self.board.num_tiles - 1)
 
             if first_row_tile.piece is not None and first_row_tile.piece.color == Color.RED:
-                return Color.RED
+                first_row_tile.piece = King((first_row_tile.row, first_row_tile.col), Color.RED, self.board, self.board.tile_size)
             
             if last_row_tile.piece is not None and last_row_tile.piece.color == Color.BLACK:
-                return Color.BLACK
-        return None
+                last_row_tile.piece = King((last_row_tile.row, last_row_tile.col), Color.BLACK, self.board, self.board.tile_size)
             
 
     def check_winner(self) -> bool:
         """ Returns True if any player has won, returns False otherwise """
-        # TODO: make sure this check is okay according to the rules of checkers
+        # NOTE: Rules of checkers: win if 1.) opponent has no pieces left or 2.) opponent has no moves left
         reds, blacks = self.count_pieces()
         if reds == 0 or blacks == 0:
             self.winner = Color.RED if reds > blacks else Color.BLACK
