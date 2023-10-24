@@ -14,57 +14,31 @@ class Board:
         # TODO: define actual starting position
         if board is None:
             self.board = []
-            self.board.append([])
-            for _ in range(self.num_tiles // 2):
-                self.board[0].append(Color.BLACK)
-                self.board[0].append(0)
 
-            self.board.append([])
-            for _ in range(self.num_tiles // 2):
-                self.board[-1].append(0)
-                self.board[-1].append(Color.BLACK)
-
-            self.board.append([])
-            for _ in range(self.num_tiles // 2):
-                self.board[-1].append(Color.BLACK)
-                self.board[-1].append(0)
+            for i in range(3):
+                self.board.append([])
+                if i % 2:
+                    for _ in range(self.num_tiles // 2):
+                        self.board[-1].append(0)
+                        self.board[-1].append(Color.BLACK)
+                else:
+                    for _ in range(self.num_tiles // 2):
+                        self.board[-1].append(Color.BLACK)
+                        self.board[-1].append(0)
                 
             for _ in range(self.num_tiles - 6):
                 self.board.append([0 for _ in range(self.num_tiles)])
 
-            self.board.append([])
-            for _ in range(self.num_tiles // 2):
-                self.board[-1].append(0)
-                self.board[-1].append(Color.RED)
-
-            self.board.append([])
-            for _ in range(self.num_tiles // 2):
-                self.board[-1].append(Color.RED)
-                self.board[-1].append(0)
-
-            self.board.append([])
-            for _ in range(self.num_tiles // 2):
-                self.board[-1].append(0)
-                self.board[-1].append(Color.RED)
-
-            print(self.board)
-
-            """# black piece alternating for 3 rows
             for i in range(3):
                 self.board.append([])
-                for _ in range(self.num_tiles // 2):
-                    self.board[i].append(Color.BLACK)
-                    self.board[i].append(0)
-
-            for _ in range(self.num_tiles - 2):
-                self.board.append([0 for _ in range(self.num_tiles)])
-
-            # red pieces alternating for 3 rows
-            for i in range(3):
-                self.board.append([])
-                for _ in range(self.num_tiles // 2):
-                    self.board[i].append(Color.RED)
-                    self.board[i].append(0) """
+                if i % 2:
+                    for _ in range(self.num_tiles // 2):
+                        self.board[-1].append(Color.RED)
+                        self.board[-1].append(0)
+                else:
+                    for _ in range(self.num_tiles // 2):
+                        self.board[-1].append(0)
+                        self.board[-1].append(Color.RED)
         else:
             self.board = board
 
