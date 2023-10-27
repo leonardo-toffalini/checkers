@@ -34,8 +34,12 @@ class Piece:
 
         if move in valid_takes:
             prev = self.board.get_tile_from_pos(self.pos[1], self.pos[0])
+            target_tile_pos = (self.pos[0] + move[0] // 2, self.pos[1] + move[1] // 2) # (row, col)
+            target_tile = self.board.get_tile_from_pos(target_tile_pos[1], target_tile_pos[0])
             self.pos = (tile.y_index, tile.x_index)
             prev.piece = None
+            if target_tile is not None:
+                target_tile.piece = None
             tile.piece = self
             self.board.selected_piece = None
             return True

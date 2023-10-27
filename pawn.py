@@ -21,7 +21,7 @@ class Pawn(Piece):
     def _possible_takes(self) -> list[tuple[int]]:
         """ Returns a list of possible takes for the pawn, does not check if take is legal for the current positions """
         # TODO: return the correct possible takes
-        return [(1, -1), (1, 1)] if self.color == Color.BLACK else [(-1, -1), (-1, 1)] # returns a list of possible takes with indexing (x, y)
+        return [(2, -2), (2, 2)] if self.color == Color.BLACK else [(-2, -2), (-2, 2)] # returns a list of possible takes with indexing (x, y)
 
 
     def valid_moves(self) -> list[tuple[int]]:
@@ -46,14 +46,16 @@ class Pawn(Piece):
         takes = []
         poss_takes = self._possible_takes()
         for take in poss_takes:
-            tile_pos = (self.pos[0] + take[0], self.pos[1] + take[1]) # (row, col)
-            if tile_pos[0] > 2 or tile_pos[0] < 0 or tile_pos[1] > 2 or tile_pos[1] < 0:
+            jump_tile_pos = (self.pos[0] + take[0], self.pos[1] + take[1]) # (row, col)
+            if jump_tile_pos[0] > self.board.num_tiles or jump_tile_pos[0] < 0 or jump_tile_pos[1] > self.board.num_tiles or jump_tile_pos[1] < 0:
                 continue
             
-            tile = self.board.get_tile_from_pos(tile_pos[1], tile_pos[0]) # function takes (x, y) parameters so (col, row)
-            if tile.piece is not None:
+            jump_tile = self.board.get_tile_from_pos(jump_tile_pos[1], jump_tile_pos[0]) # function takes (x, y) parameters so (col, row)
+            if jump_tile is not None and jump_tile.piece is None:
+                target_tile_pos = (self.pos[0] + take[0] // 2, self.pos[1] + take[1] // 2) # (row, col)
+                target_tile = self.board.get_tile_from_pos(target_tile_pos[1], target_tile_pos[0])
                 other_color = Color.BLACK if self.color == Color.RED else Color.RED
-                if tile.piece.color == other_color:
+                if target_tile.piece is not None and target_tile.piece.color == other_color:
                     takes.append(take)
         return takes
 
