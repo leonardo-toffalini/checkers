@@ -17,7 +17,7 @@ class Checkers:
         pygame.display.update()
 
 
-    def main(self, board_size: int, num_tiles: int = 3) -> None:
+    def main(self, board_size: int, num_tiles: int = 8) -> None:
         """ Main game loop """
         board = Board(board_size=board_size, board = None, num_tiles=num_tiles)
         game = Game(board)

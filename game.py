@@ -44,7 +44,7 @@ class Game:
     
 
     def check_last_rank(self) -> Color|None:
-        """ Returns BLACK if a BLACK piece has reached the last rank, returns RED if a RED piece has reached the last rank, returns None otherwise """
+        """ Promotes pawn to king if it has reached the last rank """
         for i in range(self.board.num_tiles):
             first_row_tile = self.board.get_tile_from_pos(i, 0)
             last_row_tile = self.board.get_tile_from_pos(i, self.board.num_tiles - 1)

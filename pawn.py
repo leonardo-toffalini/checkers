@@ -20,7 +20,6 @@ class Pawn(Piece):
 
     def _possible_takes(self) -> list[tuple[int]]:
         """ Returns a list of possible takes for the pawn, does not check if take is legal for the current positions """
-        # TODO: return the correct possible takes
         return [(2, -2), (2, 2)] if self.color == Color.BLACK else [(-2, -2), (-2, 2)] # returns a list of possible takes with indexing (x, y)
 
 
@@ -42,7 +41,6 @@ class Pawn(Piece):
     
     def valid_takes(self) -> list[tuple[int]]:
         """ Returns a list of legal takes for the pawn for the current position """
-        # TODO: return the correct legal takes
         takes = []
         poss_takes = self._possible_takes()
         for take in poss_takes:
