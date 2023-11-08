@@ -23,6 +23,7 @@ class Checkers:
         game = Game(board)
 
         while self.running:
+            game.check_last_rank()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False

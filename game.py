@@ -50,10 +50,10 @@ class Game:
             last_row_tile = self.board.get_tile_from_pos(i, self.board.num_tiles - 1)
 
             if first_row_tile.piece is not None and first_row_tile.piece.color == Color.RED:
-                first_row_tile.piece = King((first_row_tile.row, first_row_tile.col), Color.RED, self.board, self.board.tile_size)
+                first_row_tile.piece = King((first_row_tile.y_index, first_row_tile.x_index), Color.RED, self.board, self.board.tile_size)
             
             if last_row_tile.piece is not None and last_row_tile.piece.color == Color.BLACK:
-                last_row_tile.piece = King((last_row_tile.row, last_row_tile.col), Color.BLACK, self.board, self.board.tile_size)
+                last_row_tile.piece = King((last_row_tile.y_index, last_row_tile.x_index), Color.BLACK, self.board, self.board.tile_size)
             
 
     def check_winner(self) -> bool:
