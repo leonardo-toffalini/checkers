@@ -14,7 +14,7 @@ class Piece:
         self.board = board
 
 
-    def move(self, tile: Tile) -> bool:
+    def move(self, tile: Tile, takes_available: bool) -> bool:
         """ Moves the pawn to the specified tile if applicable, returns True if move was applicable, returns False otherwise """
         valid_moves = self.valid_moves()
         valid_takes = self.valid_takes()
@@ -24,7 +24,7 @@ class Piece:
  
         if DEBUG == 5: print(f'valid moves: {valid_moves}')
         if DEBUG == 5: print(f'valid takes: {valid_takes}')
-        if move in self.valid_moves():
+        if move in self.valid_moves() and not takes_available:
             prev = self.board.get_tile_from_pos(self.pos[1], self.pos[0])
             self.pos = (tile.y_index, tile.x_index)
             prev.piece = None

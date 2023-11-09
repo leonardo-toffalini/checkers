@@ -74,7 +74,7 @@ class Board:
                 return tile
 
     
-    def handle_click(self, x: int, y: int) -> None:
+    def handle_click(self, x: int, y: int, takes_available: bool) -> None:
         """ Highlights clicked tile, selects the piece on clicked tile if applicable, moves piece if applicable """
         x = x // self.tile_size
         y = y // self.tile_size
@@ -87,12 +87,15 @@ class Board:
         if DEBUG >= 2: print(f'clicked tile piece color: {clicked_tile.piece}')
         if DEBUG >= 2: print(f'turn: {self.turn}')
 
+        # selecet a piece if there is no piece selected yet
         if self.selected_piece is None and clicked_tile.piece is not None and clicked_tile.piece == self.turn:
             self.selected_piece = clicked_tile.piece
 
-        elif self.selected_piece is not None and self.selected_piece.move(clicked_tile):
+        # move a piece if applicable
+        elif self.selected_piece is not None and self.selected_piece.move(clicked_tile, takes_available):
             self.turn = Color.BLACK if self.turn == Color.RED else Color.RED
 
+        # select another piece if there is a selected piece already
         elif clicked_tile.piece is not None and clicked_tile.piece.color == self.turn:
             self.selected_piece = clicked_tile.piece
 

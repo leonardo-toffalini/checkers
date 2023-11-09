@@ -23,14 +23,15 @@ class Checkers:
         game = Game(board)
 
         while self.running:
-            game.check_last_rank()
+            takes_available = game.check_takes()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
 
                 if not game.check_winner():
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        board.handle_click(event.pos[0], event.pos[1]) 
+                        board.handle_click(event.pos[0], event.pos[1], takes_available) 
+                        game.check_last_rank()
                 else:
                     game.message()
                     self.running = False

@@ -24,7 +24,7 @@ class Tile:
         )
 
     def __repr__(self):
-        return f'Tile at position {self.x_abs, self.y_abs}'
+        return f'Tile at position {self.x_index, self.y_index}'
 
     def draw(self, display):
         """ Draws a rectangle for each tile and renders the image of a piece on top of the tile if applicable """

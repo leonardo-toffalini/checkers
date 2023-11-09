@@ -1,8 +1,9 @@
 from piece import Color
 from king import King
+from board import Board
 
 class Game:
-    def __init__(self, board):
+    def __init__(self, board: Board):
         self.winner = None
         self.board = board
 
@@ -68,6 +69,28 @@ class Game:
             return True
         else:
             return False
+        
+
+    def check_takes(self):
+        """ Checks if there are takes on the board, if there are, select the piece that can make a take """
+        curr_tile, curr_piece = None, None
+
+        flag = False
+        for tile in self.board.tiles_list:
+            if tile.piece is not None:
+                curr_tile = tile
+                curr_piece = tile.piece
+                if len(curr_piece.valid_takes()) > 0:
+                    flag = True
+                    break
+        return flag
+        """ if flag:
+            # print(curr_tile)
+            for tile in self.board.tiles_list:
+                tile.highlight = False
+            curr_tile.highlight = True
+            self.board.selected_piece = curr_piece
+            # self.board.handle_click(curr_piece.x * self.board.tile_size, curr_piece.y * self.board.tile_size) """
         
 
     def message(self):
