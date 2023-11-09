@@ -79,8 +79,8 @@ class Game:
         for tile in self.board.tiles_list:
             if tile.piece is not None:
                 curr_tile = tile
-                curr_piece = tile.piece
-                if len(curr_piece.valid_takes()) > 0:
+                curr_piece = curr_tile.piece
+                if len(curr_piece.valid_takes()) > 0 and curr_piece.color == self.board.turn:
                     flag = True
                     break
         return flag

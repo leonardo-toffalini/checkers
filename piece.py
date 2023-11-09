@@ -42,6 +42,7 @@ class Piece:
                 target_tile.piece = None
             tile.piece = self
             self.board.selected_piece = None
+            self.board.last_piece_to_take = self
             return True
 
         else:

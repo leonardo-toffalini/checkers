@@ -10,6 +10,7 @@ class Board:
         self.num_tiles = num_tiles
         self.tile_size = self.board_size // self.num_tiles
         self.selected_piece = None
+        self.last_piece_to_take = None
 
         if board is None:
             self.board = []
@@ -86,6 +87,7 @@ class Board:
         if DEBUG >= 2: print(f'clicked tile piece: {clicked_tile.piece}')
         if DEBUG >= 2: print(f'clicked tile piece color: {clicked_tile.piece}')
         if DEBUG >= 2: print(f'turn: {self.turn}')
+        if DEBUG >= 2: print(self.last_piece_to_take)
 
         # selecet a piece if there is no piece selected yet
         if self.selected_piece is None and clicked_tile.piece is not None and clicked_tile.piece == self.turn:
@@ -93,7 +95,9 @@ class Board:
 
         # move a piece if applicable
         elif self.selected_piece is not None and self.selected_piece.move(clicked_tile, takes_available):
-            self.turn = Color.BLACK if self.turn == Color.RED else Color.RED
+            if self.last_piece_to_take is None or len(self.last_piece_to_take.valid_takes()) == 0:
+                self.turn = Color.BLACK if self.turn == Color.RED else Color.RED
+                self.last_piece_to_take = None
 
         # select another piece if there is a selected piece already
         elif clicked_tile.piece is not None and clicked_tile.piece.color == self.turn:
