@@ -1,8 +1,7 @@
 from typing import List
 from piece import Piece, Color
 from tile import Tile
-from pawn import Pawn, DEBUG
-from king import King
+from pawn import Pawn
 
 
 class Board:
@@ -72,9 +71,6 @@ class Board:
         for tile in self.tiles_list:
             tile.draw(display)
 
-        if DEBUG >= 1 and self.selected_piece is not None:
-            print(f"position of selected piece: {self.selected_piece.pos}")
-
     def get_tile_from_pos(self, x: int, y: int) -> Tile | None:
         """Expects parameters: x/col, y/row. Returns the tile at position (row, col)"""
         for tile in self.tiles_list:
@@ -90,22 +86,6 @@ class Board:
 
         if clicked_tile is None:
             raise Exception("clicked_tile is None in board.py :92")
-
-        # if DEBUG >= 2:
-        #     print(f"clicked tile pos: {clicked_tile}")
-        #
-        # if DEBUG >= 2:
-        #     print(f"clicked tile: {clicked_tile}")
-        # if DEBUG >= 2:
-        #     print(f"selected piece: {self.selected_piece}")
-        # if DEBUG >= 2:
-        #     print(f"clicked tile piece: {clicked_tile.piece}")
-        # if DEBUG >= 2:
-        #     print(f"clicked tile piece color: {clicked_tile.piece}")
-        # if DEBUG >= 2:
-        #     print(f"turn: {self.turn}")
-        # if DEBUG >= 2:
-        #     print(self.last_piece_to_take)
 
         # selecet a piece if there is no piece selected yet
         if (

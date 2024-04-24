@@ -6,8 +6,8 @@ from board import Board
 
 class Game:
     def __init__(self, board: Board):
-        self.winner = None
-        self.board = board
+        self.winner: Color
+        self.board: Board = board
 
     def count_pieces(self) -> Tuple[int, int]:
         """Returns the number of black and red pieces on the board"""
@@ -55,6 +55,12 @@ class Game:
             first_row_tile = self.board.get_tile_from_pos(i, 0)
             last_row_tile = self.board.get_tile_from_pos(i, self.board.num_tiles - 1)
 
+            if first_row_tile is None:
+                raise Exception("first_row_tile is None in game.py :59")
+
+            if last_row_tile is None:
+                raise Exception("last_row_tile is None in game.py :62")
+
             if (
                 first_row_tile.piece is not None
                 and first_row_tile.piece.color == Color.RED
@@ -92,13 +98,11 @@ class Game:
 
     def check_takes(self):
         """Checks if there are takes on the board, if there are, select the piece that can make a take"""
-        curr_tile, curr_piece = None, None
 
         flag = False
         for tile in self.board.tiles_list:
             if tile.piece is not None:
-                curr_tile = tile
-                curr_piece = curr_tile.piece
+                curr_piece = tile.piece
                 if (
                     len(curr_piece.valid_takes()) > 0
                     and curr_piece.color == self.board.turn
@@ -106,13 +110,6 @@ class Game:
                     flag = True
                     break
         return flag
-        """ if flag:
-            # print(curr_tile)
-            for tile in self.board.tiles_list:
-                tile.highlight = False
-            curr_tile.highlight = True
-            self.board.selected_piece = curr_piece
-            # self.board.handle_click(curr_piece.x * self.board.tile_size, curr_piece.y * self.board.tile_size) """
 
     def message(self):
         """Prints out the winner"""

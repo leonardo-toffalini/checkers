@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import List, Tuple
-
+from pygame import surface
 from tile import Tile
 
 DEBUG = 0
@@ -16,7 +16,7 @@ class Piece:
         self.pos = pos
         self.color = color
         self.board = board
-        self.img: pygame.surface.Surface
+        self.img: surface.Surface
 
     def valid_moves(self) -> List[Tuple[int, int]]:
         return [(0, 0)]

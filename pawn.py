@@ -1,6 +1,6 @@
 from typing import List, Tuple
 import pygame
-from piece import Piece, Color, DEBUG
+from piece import Piece, Color
 
 
 class Pawn(Piece):
