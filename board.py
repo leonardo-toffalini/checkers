@@ -1,10 +1,18 @@
+from typing import List
 from piece import Piece, Color
 from tile import Tile
 from pawn import Pawn, DEBUG
 from king import King
 
+
 class Board:
-    def __init__(self, turn: Color = Color.RED, board_size: int = 600, num_tiles: int = 3, board: list|None = None):
+    def __init__(
+        self,
+        turn: Color = Color.RED,
+        board_size: int = 600,
+        num_tiles: int = 3,
+        board: list | None = None,
+    ):
         self.turn = turn
         self.board_size = board_size
         self.num_tiles = num_tiles
@@ -13,7 +21,7 @@ class Board:
         self.last_piece_to_take = None
 
         if board is None:
-            self.board = []
+            self.board: List[List[int | Color]] = []
 
             # alternating black piece for the first 3 rows
             for i in range(3):
@@ -26,7 +34,7 @@ class Board:
                     for _ in range(self.num_tiles // 2):
                         self.board[-1].append(Color.BLACK)
                         self.board[-1].append(0)
-                
+
             for _ in range(self.num_tiles - 6):
                 self.board.append([0 for _ in range(self.num_tiles)])
 
@@ -47,7 +55,7 @@ class Board:
         self.tiles_list = self._generate_tiles()
 
     def _generate_tiles(self) -> list[Tile]:
-        """ Creates a list of tiles for the board with the piece on the tiles according to self.board initialization """
+        """Creates a list of tiles for the board with the piece on the tiles according to self.board initialization"""
         tiles_list = []
         for i in range(self.num_tiles):
             for j in range(self.num_tiles):
@@ -59,43 +67,58 @@ class Board:
                 tiles_list.append(new_tile)
         return tiles_list
 
-
     def draw(self, display) -> None:
-        """ Draws the board with the tiles and the piece one the tiles """
+        """Draws the board with the tiles and the piece one the tiles"""
         for tile in self.tiles_list:
             tile.draw(display)
-        
-        if DEBUG >= 1 and self.selected_piece is not None: print(f'position of selected piece: {self.selected_piece.pos}')
 
+        if DEBUG >= 1 and self.selected_piece is not None:
+            print(f"position of selected piece: {self.selected_piece.pos}")
 
-    def get_tile_from_pos(self, x: int, y: int) -> Tile|None:
-        """ Expects parameters: x/col, y/row. Returns the tile at position (row, col)"""
+    def get_tile_from_pos(self, x: int, y: int) -> Tile | None:
+        """Expects parameters: x/col, y/row. Returns the tile at position (row, col)"""
         for tile in self.tiles_list:
             if (tile.x_index, tile.y_index) == (x, y):
                 return tile
+        return None
 
-    
     def handle_click(self, x: int, y: int, takes_available: bool) -> None:
-        """ Highlights clicked tile, selects the piece on clicked tile if applicable, moves piece if applicable """
+        """Highlights clicked tile, selects the piece on clicked tile if applicable, moves piece if applicable"""
         x = x // self.tile_size
         y = y // self.tile_size
         clicked_tile = self.get_tile_from_pos(x, y)
-        if DEBUG >= 2: print(f'clicked tile pos: {clicked_tile}')
+        if DEBUG >= 2:
+            print(f"clicked tile pos: {clicked_tile}")
 
-        if DEBUG >= 2: print(f'clicked tile: {clicked_tile}')
-        if DEBUG >= 2: print(f'selected piece: {self.selected_piece}')
-        if DEBUG >= 2: print(f'clicked tile piece: {clicked_tile.piece}')
-        if DEBUG >= 2: print(f'clicked tile piece color: {clicked_tile.piece}')
-        if DEBUG >= 2: print(f'turn: {self.turn}')
-        if DEBUG >= 2: print(self.last_piece_to_take)
+        if DEBUG >= 2:
+            print(f"clicked tile: {clicked_tile}")
+        if DEBUG >= 2:
+            print(f"selected piece: {self.selected_piece}")
+        if DEBUG >= 2:
+            print(f"clicked tile piece: {clicked_tile.piece}")
+        if DEBUG >= 2:
+            print(f"clicked tile piece color: {clicked_tile.piece}")
+        if DEBUG >= 2:
+            print(f"turn: {self.turn}")
+        if DEBUG >= 2:
+            print(self.last_piece_to_take)
 
         # selecet a piece if there is no piece selected yet
-        if self.selected_piece is None and clicked_tile.piece is not None and clicked_tile.piece == self.turn:
+        if (
+            self.selected_piece is None
+            and clicked_tile.piece is not None
+            and clicked_tile.piece == self.turn
+        ):
             self.selected_piece = clicked_tile.piece
 
         # move a piece if applicable
-        elif self.selected_piece is not None and self.selected_piece.move(clicked_tile, takes_available):
-            if self.last_piece_to_take is None or len(self.last_piece_to_take.valid_takes()) == 0:
+        elif self.selected_piece is not None and self.selected_piece.move(
+            clicked_tile, takes_available
+        ):
+            if (
+                self.last_piece_to_take is None
+                or len(self.last_piece_to_take.valid_takes()) == 0
+            ):
                 self.turn = Color.BLACK if self.turn == Color.RED else Color.RED
                 self.last_piece_to_take = None
 
