@@ -16,10 +16,7 @@ class Game:
             for j in range(self.board.num_tiles):
                 tile = self.board.get_tile_from_pos(j, i)
                 if tile is None:
-                    print(
-                        "Got None in self.board.get_tile_from_pos(j, i) in self.count_pieces()"
-                    )
-                    exit(1)
+                    raise Exception("tile is None in game.py :19")
 
                 if tile.piece is None:
                     continue

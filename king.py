@@ -1,13 +1,17 @@
 from typing import List, Tuple
 import pygame
-from piece import Piece, Color, DEBUG
+import piece
 
 
-class King(Piece):
-    def __init__(self, pos: Tuple[int, int], color: Color, board, tile_size: int = 200):
+class King(piece.Piece):
+    def __init__(
+        self, pos: Tuple[int, int], color: piece.Color, board, tile_size: int = 200
+    ):
         super().__init__(pos, color, board)
         img_path = (
-            "images/black-king.png" if color == Color.BLACK else "images/red-king.png"
+            "images/black-king.png"
+            if color == piece.Color.BLACK
+            else "images/red-king.png"
         )
         self.x = pos[1]
         self.y = pos[0]
@@ -81,7 +85,11 @@ class King(Piece):
                 target_tile = self.board.get_tile_from_pos(
                     target_tile_pos[1], target_tile_pos[0]
                 )
-                other_color = Color.BLACK if self.color == Color.RED else Color.RED
+                other_color = (
+                    piece.Color.BLACK
+                    if self.color == piece.Color.RED
+                    else piece.Color.RED
+                )
                 if (
                     target_tile.piece is not None
                     and target_tile.piece.color == other_color

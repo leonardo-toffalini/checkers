@@ -13,12 +13,12 @@ class Board:
         num_tiles: int = 3,
         board: list | None = None,
     ):
-        self.turn = turn
-        self.board_size = board_size
-        self.num_tiles = num_tiles
-        self.tile_size = self.board_size // self.num_tiles
-        self.selected_piece = None
-        self.last_piece_to_take = None
+        self.turn: Color = turn
+        self.board_size: int = board_size
+        self.num_tiles: int = num_tiles
+        self.tile_size: int = self.board_size // self.num_tiles
+        self.selected_piece: Piece | None = None
+        self.last_piece_to_take: Piece | None = None
 
         if board is None:
             self.board: List[List[int | Color]] = []
@@ -87,21 +87,25 @@ class Board:
         x = x // self.tile_size
         y = y // self.tile_size
         clicked_tile = self.get_tile_from_pos(x, y)
-        if DEBUG >= 2:
-            print(f"clicked tile pos: {clicked_tile}")
 
-        if DEBUG >= 2:
-            print(f"clicked tile: {clicked_tile}")
-        if DEBUG >= 2:
-            print(f"selected piece: {self.selected_piece}")
-        if DEBUG >= 2:
-            print(f"clicked tile piece: {clicked_tile.piece}")
-        if DEBUG >= 2:
-            print(f"clicked tile piece color: {clicked_tile.piece}")
-        if DEBUG >= 2:
-            print(f"turn: {self.turn}")
-        if DEBUG >= 2:
-            print(self.last_piece_to_take)
+        if clicked_tile is None:
+            raise Exception("clicked_tile is None in board.py :92")
+
+        # if DEBUG >= 2:
+        #     print(f"clicked tile pos: {clicked_tile}")
+        #
+        # if DEBUG >= 2:
+        #     print(f"clicked tile: {clicked_tile}")
+        # if DEBUG >= 2:
+        #     print(f"selected piece: {self.selected_piece}")
+        # if DEBUG >= 2:
+        #     print(f"clicked tile piece: {clicked_tile.piece}")
+        # if DEBUG >= 2:
+        #     print(f"clicked tile piece color: {clicked_tile.piece}")
+        # if DEBUG >= 2:
+        #     print(f"turn: {self.turn}")
+        # if DEBUG >= 2:
+        #     print(self.last_piece_to_take)
 
         # selecet a piece if there is no piece selected yet
         if (

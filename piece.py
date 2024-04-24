@@ -1,4 +1,6 @@
 from enum import Enum
+from typing import List, Tuple
+
 from tile import Tile
 
 DEBUG = 0
@@ -10,10 +12,17 @@ class Color(Enum):
 
 
 class Piece:
-    def __init__(self, pos: tuple[int, int], color: Color, board):
+    def __init__(self, pos: tuple[int, int], color: Color, board) -> None:
         self.pos = pos
         self.color = color
         self.board = board
+        self.img: pygame.surface.Surface
+
+    def valid_moves(self) -> List[Tuple[int, int]]:
+        return [(0, 0)]
+
+    def valid_takes(self) -> List[Tuple[int, int]]:
+        return [(0, 0)]
 
     def move(self, tile: Tile, takes_available: bool) -> bool:
         """Moves the pawn to the specified tile if applicable, returns True if move was applicable, returns False otherwise"""
@@ -25,10 +34,10 @@ class Piece:
         if DEBUG == 5:
             print(f"move: {move[0], move[1]}")
 
-        if DEBUG == 5:
-            print(f"valid moves: {valid_moves}")
-        if DEBUG == 5:
-            print(f"valid takes: {valid_takes}")
+        # if DEBUG == 5:
+        #     print(f"valid moves: {valid_moves}")
+        # if DEBUG == 5:
+        #     print(f"valid takes: {valid_takes}")
 
         if move in self.valid_moves() and not takes_available:
             prev = self.board.get_tile_from_pos(self.pos[1], self.pos[0])
@@ -38,7 +47,7 @@ class Piece:
             self.board.selected_piece = None
             return True
 
-        if move in valid_takes:
+        if move in self.valid_takes():
             prev = self.board.get_tile_from_pos(self.pos[1], self.pos[0])
             target_tile_pos = (
                 self.pos[0] + move[0] // 2,
